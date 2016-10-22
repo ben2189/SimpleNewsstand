@@ -1,4 +1,4 @@
-package vn.me.simplenewsstand.utils;
+package vn.me.simplenewsstand.model;
 
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;

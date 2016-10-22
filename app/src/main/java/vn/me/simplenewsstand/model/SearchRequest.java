@@ -9,8 +9,12 @@ import java.util.Map;
 
 public class SearchRequest {
 
-    private int page = 0;
-    private String query = "";
+    private int page;
+    private String query;
+
+    public SearchRequest() {
+        reset();
+    }
 
     public void setPage(int page) {
         this.page = page;
@@ -31,6 +35,9 @@ public class SearchRequest {
 
     public Map<String, String> toQueryMap() {
         Map<String, String> options = new HashMap<>();
+        if (query != null && !query.isEmpty()) {
+            options.put("q", query);
+        }
         options.put("page", String.valueOf(page));
         return options;
     }

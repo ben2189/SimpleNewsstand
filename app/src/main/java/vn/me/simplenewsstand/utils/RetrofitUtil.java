@@ -11,9 +11,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import vn.me.simplenewsstand.BuildConfig;
+import vn.me.simplenewsstand.model.ApiResponse;
 
 public class RetrofitUtil {
 
@@ -32,6 +34,7 @@ public class RetrofitUtil {
         return new OkHttpClient.Builder()
                 .addInterceptor(apiKeyInterceptor())
                 .addInterceptor(responseInterceptor())
+                .addInterceptor(loggingInterceptor())
                 .build();
     }
 
@@ -68,6 +71,12 @@ public class RetrofitUtil {
                 return response;
             }
         };
+    }
+
+    private static Interceptor loggingInterceptor() {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return loggingInterceptor;
     }
 
 }

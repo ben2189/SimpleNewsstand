@@ -75,6 +75,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 ((NoImageViewHolder) holder).bindData(article);
         }
         if (position == mArticles.size() - 1 && mLoadMoreListener != null) {
+            // FIXME this method is called at the first load
             mLoadMoreListener.handleLoadMore();
         }
     }
