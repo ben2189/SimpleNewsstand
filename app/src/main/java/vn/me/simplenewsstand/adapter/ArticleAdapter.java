@@ -24,9 +24,18 @@ import vn.me.simplenewsstand.model.Article;
 public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Article> mArticles;
+    private Listener mLoadMoreListener;
+
+    public interface Listener {
+        void handleLoadMore();
+    }
 
     public ArticleAdapter() {
         this.mArticles = new ArrayList<>();
+    }
+
+    public void setLoadMoreListener(Listener listener) {
+        mLoadMoreListener = listener;
     }
 
     public void setArticles(List<Article> articles) {
@@ -65,6 +74,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             default:
                 ((NoImageViewHolder) holder).bindData(article);
         }
+        if (position == mArticles.size() - 1 && mLoadMoreListener != null) {
+            mLoadMoreListener.handleLoadMore();
+        }
     }
 
     @Override
@@ -77,7 +89,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return mArticles.get(position).getType();
     }
 
-    // TODO try to extends NoImageViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.ivImage)

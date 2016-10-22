@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -28,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.rvArticle)
     RecyclerView rvArticle;
 
+    @BindView(R.id.pbLoading)
+    RelativeLayout pbLoading;
+
+    @BindView(R.id.pbLoadMore)
+    ProgressBar pbLoadMore;
+
     public interface Listener {
         void handleResult(SearchResult searchResult);
     }
@@ -50,12 +59,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpViews() {
         mArticleAdapter = new ArticleAdapter();
+        mArticleAdapter.setLoadMoreListener(new ArticleAdapter.Listener() {
+            @Override
+            public void handleLoadMore() {
+                searchMoreArticle();
+            }
+        });
         mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rvArticle.setLayoutManager(mLayoutManager);
         rvArticle.setAdapter(mArticleAdapter);
     }
 
     private void searchArticle() {
+        pbLoading.setVisibility(View.VISIBLE);
+        mSearchRequest.reset();
         fetchArticles(new Listener() {
             @Override
             public void handleResult(SearchResult searchResult) {
@@ -64,17 +81,38 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void searchMoreArticle() {
+        pbLoadMore.setVisibility(View.VISIBLE);
+        mSearchRequest.nextPage();
+        fetchArticles(new Listener() {
+            @Override
+            public void handleResult(SearchResult searchResult) {
+                mArticleAdapter.addArticles(searchResult.getArticles());
+            }
+        });
+    }
+
     private void fetchArticles(final Listener listener) {
         mArticleApi.search(mSearchRequest.toQueryMap()).enqueue(new Callback<SearchResult>() {
             @Override
             public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
-                listener.handleResult(response.body());
+                SearchResult result = response.body();
+                if (result != null && result.getArticles() != null) {
+                    listener.handleResult(result);
+                    hideLoading();
+                }
             }
 
             @Override
             public void onFailure(Call<SearchResult> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Call article searching api fail!", Toast.LENGTH_SHORT);
+                hideLoading();
             }
         });
+    }
+
+    private void hideLoading() {
+        pbLoading.setVisibility(View.GONE);
+        pbLoadMore.setVisibility(View.GONE);
     }
 }
