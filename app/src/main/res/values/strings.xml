@@ -1,4 +1,26 @@
 <resources>
     <string name="app_name">Simple Newsstand</string>
     <string name="search_articles">Search articles</string>
+    <string name="begin_date">Begin Date</string>
+    <string name="sort_order">Sort Order</string>
+    <string name="news_desk_values">News Desk Values</string>
+    <string name="arts">Arts</string>
+    <string name="fashion_style"><![CDATA[Fashion & Style]]></string>
+    <string name="sports">Sports</string>
+    <string name="save">SAVE</string>
+
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="pick_date">Pick date...</string>
+    <string-array name="date_array">
+        <item>@string/today</item>
+        <item>@string/yesterday</item>
+        <item>@string/pick_date</item>
+    </string-array>
+
+    <string-array name="sort_array">
+        <item>None</item>
+        <item>Newest</item>
+        <item>Oldest</item>
+    </string-array>
 </resources>

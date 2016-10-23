@@ -1,5 +1,6 @@
 package vn.me.simplenewsstand.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import vn.me.simplenewsstand.adapter.ArticleAdapter;
 import vn.me.simplenewsstand.api.ArticleApi;
 import vn.me.simplenewsstand.model.SearchRequest;
 import vn.me.simplenewsstand.model.SearchResult;
+import vn.me.simplenewsstand.utils.Constants;
 import vn.me.simplenewsstand.utils.RetrofitUtil;
 
 public class MainActivity extends AppCompatActivity {
@@ -162,5 +164,17 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_sort:
+                Intent i = new Intent(MainActivity.this, FilterActivity.class);
+                i.putExtra(Constants.SEARCH_REQUEST, mSearchRequest);
+                startActivityForResult(i, Constants.REQUEST_CODE);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
