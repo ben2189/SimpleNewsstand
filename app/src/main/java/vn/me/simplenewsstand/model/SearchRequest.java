@@ -65,6 +65,26 @@ public class SearchRequest implements Parcelable {
         this.newsDesk = newsDesk;
     }
 
+    public int getPage() {
+        return page;
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public long getBeginTime() {
+        return beginTime;
+    }
+
+    public String getSortType() {
+        return sortType;
+    }
+
+    public String getNewsDesk() {
+        return newsDesk;
+    }
+
     public void nextPage() {
         this.page++;
     }

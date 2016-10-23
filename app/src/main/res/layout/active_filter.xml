@@ -13,12 +13,12 @@
             android:padding="10dp"
             android:text="@string/begin_date" />
 
-        <Spinner
-            android:id="@+id/spDate"
+        <EditText
+            android:id="@+id/etDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/date_array"
-            android:padding="10dp"></Spinner>
+            android:hint="@string/pick_date"
+            android:padding="10dp"></EditText>
     </TableRow>
 
     <TableRow>

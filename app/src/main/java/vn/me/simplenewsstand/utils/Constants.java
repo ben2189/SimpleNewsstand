@@ -9,4 +9,5 @@ public class Constants {
     // Intent
     public static final int REQUEST_CODE = 20;
     public static final String SEARCH_REQUEST = "request";
+    public static final String TIME = "time";
 }
