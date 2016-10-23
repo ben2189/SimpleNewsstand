@@ -15,7 +15,7 @@ The following **required** functionality is completed:
   * [x] News desk values (Arts, Fashion & Style, Sports)
   * [x] Sort order (oldest or newest)
 * [x] Subsequent searches have any filters applied to the search results
-* [ ] User can tap on any article in results to view the contents in an embedded browser.
+* [x] User can tap on any article in results to view the contents in an embedded browser.
 * [x] User can **scroll down to see more articles**. The maximum number of articles is limited by the API search.
 
 The following **optional** features are implemented:
@@ -54,6 +54,8 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ## Notes
 
 Describe any challenges encountered while building the app.
+
+I can not add `app:CardElevation` into CardView and `android:orientation` into RecyclerView
 
 ## Open-source libraries used
 

@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 searchMoreArticle();
             }
         });
+        mArticleAdapter.setContext(this);
         mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         rvArticle.setLayoutManager(mLayoutManager);

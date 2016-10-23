@@ -1,5 +1,7 @@
 package vn.me.simplenewsstand.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +17,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import vn.me.simplenewsstand.R;
+import vn.me.simplenewsstand.activity.WebViewActivity;
 import vn.me.simplenewsstand.model.Article;
 import vn.me.simplenewsstand.model.Media;
+import vn.me.simplenewsstand.utils.Constants;
 import vn.me.simplenewsstand.utils.DisplayUtil;
 
 /**
@@ -25,6 +29,7 @@ import vn.me.simplenewsstand.utils.DisplayUtil;
 
 public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private Context mContext;
     private List<Article> mArticles;
     private Listener mLoadMoreListener;
 
@@ -38,6 +43,10 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public void setLoadMoreListener(Listener listener) {
         mLoadMoreListener = listener;
+    }
+
+    public void setContext(Context mContext) {
+        this.mContext = mContext;
     }
 
     public void setArticles(List<Article> articles) {
@@ -68,7 +77,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Article article = mArticles.get(position);
+        final Article article = mArticles.get(position);
         switch (article.getType()) {
             case Article.NORMAL:
                 ((ViewHolder) holder).bindData(article);
@@ -76,6 +85,17 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             default:
                 ((NoImageViewHolder) holder).bindData(article);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mContext == null) {
+                    return;
+                }
+                Intent intent = new Intent(mContext, WebViewActivity.class);
+                intent.putExtra(Constants.WEB_URL, article.getWebUrl());
+                mContext.startActivity(intent);
+            }
+        });
         if (position == mArticles.size() - 1 && mLoadMoreListener != null) {
             mLoadMoreListener.handleLoadMore();
         }

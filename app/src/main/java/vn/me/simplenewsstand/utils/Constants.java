@@ -10,4 +10,5 @@ public class Constants {
     public static final int REQUEST_CODE = 20;
     public static final String SEARCH_REQUEST = "search_request";
     public static final String TIME = "time";
+    public static final String WEB_URL = "web_url";
 }
