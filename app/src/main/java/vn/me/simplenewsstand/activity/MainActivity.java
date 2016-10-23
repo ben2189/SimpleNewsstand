@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        mLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         rvArticle.setLayoutManager(mLayoutManager);
         rvArticle.setAdapter(mArticleAdapter);
     }
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void handleResult(SearchResult searchResult) {
                 mArticleAdapter.setArticles(searchResult.getArticles());
+                rvArticle.scrollToPosition(0);
             }
         });
     }

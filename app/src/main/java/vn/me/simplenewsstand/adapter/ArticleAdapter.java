@@ -16,6 +16,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import vn.me.simplenewsstand.R;
 import vn.me.simplenewsstand.model.Article;
+import vn.me.simplenewsstand.model.Media;
+import vn.me.simplenewsstand.utils.DisplayUtil;
 
 /**
  * Created by binhlt on 20/10/2016.
@@ -92,6 +94,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        private final int minWidth = 75;
+        private final int minHeight = 150;
+
         @BindView(R.id.ivImage)
         ImageView ivImage;
 
@@ -105,8 +110,19 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public void bindData(Article article) {
             tvSnippet.setText(article.getSnippet());
+            Media media = article.getMedias().get(0);
+            for (Media tmp : article.getMedias()) {
+                if (tmp.getWidth() > minWidth) {
+                    media = tmp;
+                    break;
+                }
+            }
+            int height = media.getHeight() < minHeight ? media.getHeight() : minHeight;
+            ViewGroup.LayoutParams params = ivImage.getLayoutParams();
+            params.height = (int) DisplayUtil.convertDpToPixel(height, itemView.getContext());
+            ivImage.setLayoutParams(params);
             Glide.with(ivImage.getContext())
-                    .load(article.getMedias().get(0).getUrl())
+                    .load(media.getUrl())
                     .into(ivImage);
         }
     }
