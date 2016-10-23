@@ -6,13 +6,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +35,18 @@ public class FilterActivity extends AppCompatActivity implements DatePickerDialo
 
     @BindView(R.id.etDate)
     EditText etDate;
+
+    @BindView(R.id.spSort)
+    Spinner spSort;
+
+    @BindView(R.id.cbArts)
+    CheckBox cbArts;
+
+    @BindView(R.id.cbFashion)
+    CheckBox cbFashion;
+
+    @BindView(R.id.cbSports)
+    CheckBox cbSports;
 
     @BindView(R.id.btnSave)
     Button btnSave;
@@ -51,6 +67,8 @@ public class FilterActivity extends AppCompatActivity implements DatePickerDialo
     }
 
     private void setUpViews() {
+        // begin date
+        etDate.setKeyListener(null);
         etDate.setText(DisplayUtil.getFormattedDate(mSearchRequest.getBeginTime()));
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +81,39 @@ public class FilterActivity extends AppCompatActivity implements DatePickerDialo
             }
         });
 
+        // sort order
+        String sortType = mSearchRequest.getSortType();
+        if (sortType.isEmpty()) {
+            sortType = getString(R.string.none);
+        }
+        setSpinnerToValue(spSort, sortType);
+        spSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String value = spSort.getSelectedItem().toString();
+                if (value.equals(getString(R.string.none))) {
+                    value = "";
+                }
+                mSearchRequest.setSortType(value);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        // news desk
+        List<String> newsDesk = mSearchRequest.getNewsDesk();
+        cbArts.setChecked(newsDesk.contains(getString(R.string.arts)));
+        cbFashion.setChecked(newsDesk.contains(getString(R.string.fashion_style)));
+        cbSports.setChecked(newsDesk.contains(getString(R.string.sports)));
+
+        cbArts.setOnCheckedChangeListener(checkedChangeListener);
+        cbFashion.setOnCheckedChangeListener(checkedChangeListener);
+        cbSports.setOnCheckedChangeListener(checkedChangeListener);
+
+        // save button
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,4 +148,20 @@ public class FilterActivity extends AppCompatActivity implements DatePickerDialo
         mSearchRequest.setBeginTime(time);
         etDate.setText(DisplayUtil.getFormattedDate(time));
     }
+
+    private CompoundButton.OnCheckedChangeListener checkedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            String text = ((CheckBox) buttonView).getText().toString();
+            if (isChecked) {
+                if (!mSearchRequest.getNewsDesk().contains(text)) {
+                    mSearchRequest.getNewsDesk().add(text);
+                }
+            } else {
+                if (mSearchRequest.getNewsDesk().contains(text)) {
+                    mSearchRequest.getNewsDesk().remove(text);
+                }
+            }
+        }
+    };
 }

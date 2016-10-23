@@ -3,7 +3,9 @@ package vn.me.simplenewsstand.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import vn.me.simplenewsstand.utils.DisplayUtil;
@@ -21,7 +23,7 @@ public class SearchRequest implements Parcelable {
      */
     private long beginTime;
     private String sortType;
-    private String newsDesk;
+    private List<String> newsDesk;
 
     public SearchRequest() {
         reset();
@@ -32,7 +34,7 @@ public class SearchRequest implements Parcelable {
         query = in.readString();
         beginTime = in.readLong();
         sortType = in.readString();
-        newsDesk = in.readString();
+        newsDesk = in.createStringArrayList();
     }
 
     public static final Creator<SearchRequest> CREATOR = new Creator<SearchRequest>() {
@@ -63,7 +65,7 @@ public class SearchRequest implements Parcelable {
         this.sortType = sortType;
     }
 
-    public void setNewsDesk(String newsDesk) {
+    public void setNewsDesk(List<String> newsDesk) {
         this.newsDesk = newsDesk;
     }
 
@@ -83,7 +85,7 @@ public class SearchRequest implements Parcelable {
         return sortType;
     }
 
-    public String getNewsDesk() {
+    public List<String> getNewsDesk() {
         return newsDesk;
     }
 
@@ -96,7 +98,7 @@ public class SearchRequest implements Parcelable {
         this.query = "";
         this.beginTime = 0;
         this.sortType = "";
-        this.newsDesk = "";
+        this.newsDesk = new ArrayList<>();
     }
 
     public Map<String, String> toQueryMap() {
@@ -107,8 +109,25 @@ public class SearchRequest implements Parcelable {
         if (beginTime != 0) {
             options.put("begin_date", DisplayUtil.getFormattedDateForApi(beginTime));
         }
+        if (sortType != null && !sortType.isEmpty()) {
+            options.put("sort", sortType.toLowerCase());
+        }
+        if (newsDesk != null && !newsDesk.isEmpty()) {
+            options.put("fq", "news_desk:(" + createNewsDeskParam() + ")");
+        }
         options.put("page", String.valueOf(page));
         return options;
+    }
+
+    private String createNewsDeskParam() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < newsDesk.size(); i++) {
+            builder.append("\"").append(newsDesk.get(i)).append("\"");
+            if (i < newsDesk.size() - 1) {
+                builder.append(" ");
+            }
+        }
+        return builder.toString();
     }
 
     @Override
@@ -122,6 +141,6 @@ public class SearchRequest implements Parcelable {
         dest.writeString(query);
         dest.writeLong(beginTime);
         dest.writeString(sortType);
-        dest.writeString(newsDesk);
+        dest.writeStringList(newsDesk);
     }
 }

@@ -30,6 +30,7 @@
             android:text="@string/sort_order" />
 
         <Spinner
+            android:id="@+id/spSort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/sort_array"
@@ -51,7 +52,7 @@
             android:paddingLeft="10dp">
 
             <CheckBox
-                android:id="@+id/cb_arts"
+                android:id="@+id/cbArts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/arts" />

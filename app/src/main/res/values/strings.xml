@@ -18,9 +18,12 @@
         <item>@string/pick_date</item>
     </string-array>
 
+    <string name="none">None</string>
+    <string name="newest">Newest</string>
+    <string name="oldest">Oldest</string>
     <string-array name="sort_array">
-        <item>None</item>
-        <item>Newest</item>
-        <item>Oldest</item>
+        <item>@string/none</item>
+        <item>@string/newest</item>
+        <item>@string/oldest</item>
     </string-array>
 </resources>
