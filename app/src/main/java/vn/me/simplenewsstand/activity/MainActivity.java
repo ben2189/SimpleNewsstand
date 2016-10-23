@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == Constants.REQUEST_CODE) {
-            SearchRequest sr = (SearchRequest) data.getSerializableExtra(Constants.SEARCH_REQUEST);
+            SearchRequest sr = (SearchRequest) data.getParcelableExtra(Constants.SEARCH_REQUEST);
             if (sr != null) {
                 mSearchRequest = sr;
             }

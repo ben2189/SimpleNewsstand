@@ -41,7 +41,8 @@ public class FilterActivity extends AppCompatActivity implements DatePickerDialo
         setContentView(R.layout.active_filter);
         ButterKnife.bind(this);
 
-        mSearchRequest = (SearchRequest) getIntent().getSerializableExtra(Constants.SEARCH_REQUEST);
+        Intent intent = getIntent();
+        mSearchRequest = (SearchRequest) intent.getParcelableExtra(Constants.SEARCH_REQUEST);
         if (mSearchRequest == null) {
             mSearchRequest = new SearchRequest();
         }

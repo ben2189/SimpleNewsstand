@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import java.util.HashMap;
 import java.util.Map;
 
+import vn.me.simplenewsstand.utils.DisplayUtil;
+
 /**
  * Created by binhlt on 21/10/2016.
  */
@@ -101,6 +103,9 @@ public class SearchRequest implements Parcelable {
         Map<String, String> options = new HashMap<>();
         if (query != null && !query.isEmpty()) {
             options.put("q", query);
+        }
+        if (beginTime != 0) {
+            options.put("begin_date", DisplayUtil.getFormattedDateForApi(beginTime));
         }
         options.put("page", String.valueOf(page));
         return options;

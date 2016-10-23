@@ -43,4 +43,9 @@ public class DisplayUtil {
         }
     }
 
+    public static String getFormattedDateForApi(long time) {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(time);
+        return new SimpleDateFormat("yyyyMMdd").format(c.getTime());
+    }
 }
