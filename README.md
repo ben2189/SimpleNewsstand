@@ -9,9 +9,9 @@ Time spent: **21** hours spent in total
 The following **required** functionality is completed:
 
 * [x] User can **search for news article** by specifying a query and launching a search. Search displays a grid of image results from the New York Times Search API.
-* [ ] User can click on "settings" which allows selection of **advanced search options** to filter results
-* [ ] User can configure advanced search filters such as:
-  * [ ] Begin Date (using a date picker)
+* [x] User can click on "settings" which allows selection of **advanced search options** to filter results
+* [x] User can configure advanced search filters such as:
+  * [x] Begin Date (using a date picker)
   * [ ] News desk values (Arts, Fashion & Style, Sports)
   * [ ] Sort order (oldest or newest)
 * [ ] Subsequent searches have any filters applied to the search results
@@ -47,7 +47,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+![Video Walkthrough](simple-newsstand-demo.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -59,6 +59,7 @@ Describe any challenges encountered while building the app.
 
 - [Retrofit](https://square.github.io/retrofit/) - A type-safe HTTP client for Android and Java
 - [Glide](https://github.com/bumptech/glide) - An image loading and caching library for Android
+- [Butter Knife](http://jakewharton.github.io/butterknife/) - Field and method binding for Android views
 
 ## License
 
